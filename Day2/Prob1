@@ -1,0 +1,64 @@
+import org.w3c.dom.ls.LSInput;
+//Write a function that will return the count of distinct case-insensitive alphabetic characters and numeric digits
+// that occur more than once in the input string.
+//The input string can be assumed to contain only alphabets (both uppercase and lowercase) and numeric digits.
+
+import java.util.ArrayList;
+class tupla {
+
+    private char c;
+    private int i;
+    public tupla(char c, int i) {
+        this.c = c;
+        this.i = i;
+    }
+
+}
+public class Prob2 {
+        public static int functia_mea(String input)
+    {
+        String input_aux=input.toLowerCase();
+       char [] input_string=input_aux.toCharArray();
+       ArrayList<Character> input_array=new ArrayList<Character>();
+       ArrayList<Character> input_array2=new ArrayList<Character>();
+
+        ArrayList<tupla>rezultat=new ArrayList<tupla>();
+
+       boolean ok=false;
+       char auxiliar;
+       for(char i:input_string)
+       {
+        input_array.add(i);
+       }
+       int numar=0;
+
+       while(ok!=true)
+       {
+           auxiliar=input_array.get(0);
+           for(char c:input_array)
+           {
+           if(c==auxiliar)
+               numar++;
+           }
+           if (numar >1) {
+            rezultat.add(new tupla(auxiliar,numar));
+           }
+           for(char as:input_array)
+           {
+               if(as!=auxiliar) {
+                   input_array2.add(as);
+               }
+           }
+           input_array=new ArrayList<Character>(input_array2);
+           input_array2.clear();
+           numar=0;
+           if(input_array.size()==0)
+               ok=true;
+       }
+       return rezultat.size();
+    }
+    public static void main(String [] args) {
+        int x=functia_mea("LLuciannn");
+        System.out.println("In stringul LLuciannn avem "+x+" caractere care se repeta");
+    }
+}
