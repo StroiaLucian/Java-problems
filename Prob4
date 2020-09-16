@@ -1,0 +1,54 @@
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+Example:
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+Explanation: 342 + 465 = 807.
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int obtainNumber(ListNode l){
+        int nr=0;
+        int i=1;
+        while(l!=null)
+        {
+            nr=l.val*i + nr;
+            l=l.next;
+            i*=10;
+        }
+        return nr; 
+    }
+    public ListNode obstainList(int number){
+        int c=0;
+        ListNode ret= new ListNode(number%10,null);
+        number=number/10;
+        ListNode remind=ret;
+        while(number!=0)
+        {
+        c=number%10;
+        ret.next=new ListNode(c,null);
+        ret=ret.next;
+        number=number/10;
+        }
+        return remind;
+        
+    }
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int answear=obtainNumber(l1)+obtainNumber(l2);
+        
+        return obstainList(answear);
+    }
+}
