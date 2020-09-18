@@ -1,0 +1,74 @@
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+
+A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+Example:
+
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+
+class Solution {
+    public List<String> letterCombinations(String digits) {
+    if(digits.length()==0) return new ArrayList<String>();
+    List<String> rezultat= new ArrayList<String>();
+    ArrayList<Pair<Character,ArrayList<String>>> listaDeNumere= new ArrayList<Pair<Character,ArrayList<String>>>();
+    ArrayList<String>listaLitere=new ArrayList<String>();
+    int k=97;
+    int nr=1;
+        for(int i=2;i<=9;i++)
+        {
+            listaLitere=new ArrayList<String>();
+        while(nr<=3)
+        {
+            listaLitere.add(Character.toString((char) k));
+            nr++;
+            k++;
+        } 
+        nr=1;
+        if(i==9 || i==7) {
+            listaLitere.add(Character.toString((char)k));
+        k++;
+        }
+        listaDeNumere.add(new Pair(i,listaLitere));
+        }
+    //acum avem o structura frumoasa in care avem perechi cu numerele si literele corespunzatoare la fel ca si la telefon.
+    char[] numere= digits.toCharArray();
+    int contor=0;
+        while(contor!=numere.length-1)
+        {
+            //acum lucram cu literele de la numere[contor]
+            Pair<Character,ArrayList<String>> perecheCurenta= listaDeNumere.get(Integer.parseInt(numere[contor]+"")-numere.length); // aici avem perechea 2-abc.
+            for( int i=contor+1;i<numere.length;i++)
+            {
+                ArrayList<String> stringuri2=listaDeNumere.get(Integer.parseInt(numere[i]+"")-numere.length).getValue();
+                for(int j=0;j<perecheCurenta.getValue().size();j++)
+                {
+                    for(int m=0;m<stringuri2.size();m++)
+                    {
+                        rezultat.add(perecheCurenta.getValue().get(j)+stringuri2.get(m)+"");
+                    }
+                }
+            }
+           contor++;
+        }
+        
+        if(digits.length()==1){
+            rezultat=new ArrayList<String>();
+            Pair<Character,ArrayList<String>> perecheCurenta= listaDeNumere.get(Integer.parseInt(numere[0]+"")-(numere.length+1));
+            for(int u=0;u<perecheCurenta.getValue().size();u++)
+                rezultat.add(perecheCurenta.getValue().get(u));
+        }
+        return rezultat;
+    /*
+    for(Pair<Character,ArrayList<String>> p:listaDeNumere)
+    {
+        System.out.println(p.getKey()+"->");
+        for(String c:p.getValue())
+            System.out.println("-"+c);
+    }
+    */
+}
+}
+
+OBSERVATIE:Merge doar pentru 1 sau 2 cifre, ex input(0-99)...
