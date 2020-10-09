@@ -1,0 +1,31 @@
+A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+
+How many possible unique paths are there?
+
+
+class Solution {
+    public int uniquePaths(int m, int n) {
+//Prima varianta, care functioneaza pe 60% din cazuri insa pe unele da time exceeded
+/*        if(m==1 || n==1) // atunci avem o singura linie sau o singura coloana, atunci returnam 1 pentru ca e singura modalitate de a ajunge la GOAL.
+            return 1;
+        return uniquePaths(m-1,n)+uniquePaths(m,n-1);// decrementam linia si apelam aceeasi functie pastrand coloanele + decrementam coloana si pastram aceeasi linie. Asa o sa ajungem la un moment dat la (0,0) care e coltul din stanga sus. Ajungem la acest colt prin miscari complementare fata de cele cerute. (sus, stanga) in comparatie cu (jos,dreapta);
+ */
+//A doua varianta;
+    int[][] matrice= new int[m][n];
+    for(int i=0;i<m;i++){
+        matrice[i][0]=1;
+    }
+    for(int j=0;j<n;j++){
+        matrice[0][j]=1;
+    }
+    // for-urile de mai sus se asigura sa puna pe prima linie respectiv prima coloana valori de 1. De ce 1? Pentru ca putem ajunge pornind din coltul din stanga sus, in orice punct de pe prima linie respectiv prima coloana prin utilizarea unei singure DIRECTII( dreapta SAU jos).
+    for(int i=1;i<m;i++){ // sarim peste prima linie
+        for(int j=1;j<n;j++){ // sarim peste prima coloana. prima linie/coloana sunt deja completate cu valori.
+            matrice[i][j]=matrice[i-1][j]+matrice[i][j-1]; // adunam valorile care se afla in stanga jos si dreapta sus. Deoarece, prin insumarea acestor valori, obtinum numarul maxim de combinatii (dreapta jos) care pot fi realizate in mod UNIC pentru a ajunge in matrice la pozitia i,j.
+        }
+    }
+        return matrice[m-1][n-1];
+    }
+}
