@@ -1,0 +1,53 @@
+Given a string s, return the longest palindromic substring in s.
+
+ 
+
+Example 1:
+
+Input: s = "babad"
+Output: "bab"
+Note: "aba" is also a valid answer.
+Example 2:
+
+Input: s = "cbbd"
+Output: "bb"
+
+
+
+import java.lang.*; 
+import java.io.*; 
+import java.util.*; 
+class Solution {
+    public String longestPalindrome(String s) {
+        if(s.length()==1) return s;
+        char[] litere= s.toCharArray();
+        ArrayList<String> rezultate= new ArrayList<String>();
+        for(int i=0;i<s.length();i++){
+            for(int j=i+1;j<s.length();j++){
+                if(litere[i]==litere[j]){
+                    // pe pozitia i si pe pozitia j avem aceeasi litera. motiv pentru care, e posibil sa avem un palindrom.
+                String nou="";
+                for(int k=i;k<j+1;k++){
+                    nou+=litere[k];
+                }             
+                    rezultate.add(nou);
+                }
+            }    
+        }
+        int max=0;
+        String returnString="";
+        String re="";
+        for(String fiecare:rezultate){
+            System.out.println(fiecare);
+             re=new StringBuffer(fiecare).reverse().toString();
+            if(fiecare.equals(re)){
+                if(fiecare.length()>=max){
+                    max=fiecare.length();
+                    returnString=fiecare;
+                }
+            }
+        }
+        if(returnString.isEmpty()) return litere[0]+"";
+        else  return returnString;
+    }
+}
