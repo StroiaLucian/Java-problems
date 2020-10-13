@@ -1,0 +1,40 @@
+Given a collection of distinct integers, return all possible permutations.
+
+Example:
+
+Input: [1,2,3]
+Output:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> rezultat= new ArrayList<List<Integer>>();
+        List<Integer> notSelected= new ArrayList<Integer>();
+        for(int i=0;i<nums.length;i++){
+            notSelected.add(nums[i]);
+       }
+        generatePermutation(new ArrayList(),notSelected,rezultat);
+        return rezultat;
+    }
+    public void generatePermutation(ArrayList<Integer> selected, List<Integer>notSelected, List<List<Integer>>rezultat){
+        if(notSelected.size()==0){ // daca am luat toate numerele pentru selectie.
+            rezultat.add(new ArrayList(selected));
+            return;
+        }
+        for(int i=0;i<notSelected.size();i++){
+            selected.add(notSelected.get(i)); // luam elementul care urmeaza a fi selectat.
+            notSelected.remove(i);// il stergem din lista de elemente care trebuie selectate.
+            generatePermutation(selected,notSelected,rezultat);
+            notSelected.add(i,selected.get(selected.size()-1));// il punem inapoi pentru urmatoarele numere, pentru a forma o noua permutare.
+            selected.remove(selected.size()-1);
+        }
+    }
+}
